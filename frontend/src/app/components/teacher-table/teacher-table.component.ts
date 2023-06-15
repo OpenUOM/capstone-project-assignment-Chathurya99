@@ -14,6 +14,7 @@ export class TeacherTableComponent implements OnInit {
   faPenSquare = faPenSquare;
   teacherData: any;
   selected: any;
+  searchText: string;
 
   constructor(private service: AppServiceService, private router: Router) { }
 
@@ -46,6 +47,7 @@ export class TeacherTableComponent implements OnInit {
     this.selected = 'Teachers';
     this.service.getTeacherData().subscribe((response) => {
       this.teacherData = Object.keys(response).map((key) => [response[key]]);
+      this.selected = this.teacherData;
     }, (error) => {
       console.log('ERROR - ', error)
     })
@@ -60,7 +62,7 @@ export class TeacherTableComponent implements OnInit {
     })
   }
 
-  search(value) {
+  /*search(value) {
     let foundItems = [];
     if (value.length <= 0) {
       this.getTeacherData();
@@ -70,7 +72,17 @@ export class TeacherTableComponent implements OnInit {
           foundItems.push(teacher)
         }
       });
-      this.teacherData = foundItems;
+      this.teacherData = foundItems;*/
+
+
+      search() {
+        if (!this.searchText) {
+          this.selected = this.teacherData;
+        } else {
+          let foundItems = this.teacherData.filter((teacher) => {
+            return teacher[0].name.toLowerCase().includes(this.searchText.toLowerCase());
+          });
+          this.selected = foundItems;
     }
   }
 
