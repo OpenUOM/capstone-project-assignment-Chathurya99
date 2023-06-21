@@ -3,14 +3,13 @@ exports.up = function (knex) {
       .createTable("teacher", function (table) {
         table.increments("id").notNullable().primary();
         table.string("name", 255);
-        table.integer("age");
+        table.int("age");
       })
       .createTable("student", function (table) {
         table.increments("id").notNullable().primary();
         table.string("name", 255);
-        table.integer("age");
+        table.int("age");
         table.string("hometown", 255);
-        table.string("religion", 255);
       })
       .createTable("dummyData", function (table) {
         table.increments("id").notNullable().primary();

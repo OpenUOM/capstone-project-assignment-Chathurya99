@@ -1,11 +1,10 @@
 module.exports = {
   testEnvironment: "node",
   coveragePathIgnorePatterns: ["/node_modules/"],
-  verbose: true,
+  verbose: false,
   testTimeout: 60000,
-  maxWorkers: 1,
-  transform: {
-    "^.+\\.jsx?$": "babel-jest"
-  },
-  transformIgnorePatterns: ["/node_modules/"],
+  maxWorkers: 1
 };
+
+
+
