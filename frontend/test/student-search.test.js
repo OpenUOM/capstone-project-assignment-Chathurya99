@@ -1,4 +1,6 @@
 import { Selector } from 'testcafe';
+import { fixture } from 'testcafe';
+
 process.env.NODE_ENV = "test";
 
 fixture`Testing Student UI`
@@ -14,5 +16,5 @@ test('Testing search students', async t => {
     let tdText = await table.find('tr').nth(rowCount-1).innerText;
     await t.expect(rowCount).eql(2)
 
-    await t.navigateTo("/dbinitialize");
+    await t.navigateTo("/student");
 });

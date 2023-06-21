@@ -1,4 +1,6 @@
 import { Selector } from 'testcafe';
+import { fixture } from 'testcafe';
+
 process.env.NODE_ENV = "test";
 
 fixture`Testing Student UI`
@@ -12,7 +14,6 @@ test('Testing edit students', async t => {
     await t.typeText("#student-Hometown", "catholic");
     await t.click("#student-add");
 
-    await t.navigateTo("/student");
     await t.click("#student-edit-999999");
 
     await t.typeText("#student-name", "Changed Student Name");
@@ -28,6 +29,5 @@ test('Testing edit students', async t => {
     let tdText = await table.find('tr').nth(rowCount - 1).innerText;
     await t.expect(tdText).contains("Changed Student Name");
 
-    await t.navigateTo("/student");
     await t.click("#student-delete-999999");
 });
