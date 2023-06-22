@@ -1,6 +1,7 @@
 {
   "name": "capstone-project",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,6 +16,7 @@
   "license": "ISC",
   "jest": {
     "testEnvironment": "node",
+    "preset": "jest.config.js",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]

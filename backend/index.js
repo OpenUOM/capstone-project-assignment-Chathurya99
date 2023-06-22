@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3').verbose();
+import express from 'express';
+//import cors from 'cors';
+import bodyParser from 'body-parser';
+import sqlite3 from 'sqlite3';
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 // Create database connection
 const db = new sqlite3.Database(':memory:');
@@ -14,7 +14,7 @@ db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS student (id INT, name TEXT, age INT, hometown TEXT, religion TEXT)');
 });
 
-app.use(cors());
+//app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -70,5 +70,5 @@ app.post('/deleteStudent', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Capstone Project Backend is running on http://localhost:${port}`);
 });
