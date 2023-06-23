@@ -172,15 +172,8 @@ describe("Student Endpoints", () => {
       "hometown": "Galle"
     };
   
-    const matchingStudent = body.find(student =>
-      student.id === addedStudent.id &&
-      student.name === addedStudent.name &&
-      student.age === addedStudent.age &&
-      student.hometown === addedStudent.hometown
-    );
-  
-    expect(matchingStudent).toBeDefined();
-  });
+    expect(body).toEqual(expect.arrayContaining([expect.objectContaining(addedStudent)]));
+});
   
 
   it("POST /editStudent should edit a Student", async () => {
