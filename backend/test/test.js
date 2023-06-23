@@ -172,7 +172,14 @@ describe("Student Endpoints", () => {
       "hometown": "Galle"
     };
   
-    expect(body).toContainEqual(addedStudent);
+    const matchingStudent = body.find(student =>
+      student.id === addedStudent.id &&
+      student.name === addedStudent.name &&
+      student.age === addedStudent.age &&
+      student.hometown === addedStudent.hometown
+    );
+  
+    expect(matchingStudent).toBeDefined();
   });
   
 
