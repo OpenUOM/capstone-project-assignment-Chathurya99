@@ -18,9 +18,9 @@ function init(db) {
 
 const knex_db = require("./db-config");
 
-/*const dbinitialize = async () => {
+const dbinitialize = async () => {
   testBase.resetDatabase(knex_db);
-};*/
+}
 
 const readTeachers = async () => {
   const sql = `SELECT * FROM teacher`;
@@ -134,11 +134,11 @@ const addStudent = async (id, name, age, religion) => {
   });
 }
 
-const updateStudent = async (name, age, religion, id) => {
-    const sql = `UPDATE student SET name = ?, age = ?, religion = ? WHERE id = ?`;
+const updateStudent = async (name, age, id) => {
+    const sql = `UPDATE student SET name = ?, age = ? WHERE id = ?`;
     return new Promise((resolve, reject) => {
       knex_db
-        .raw(sql, [name, age, religion, id])
+        .raw(sql, [name, age, id])
         .then((data) => {
           resolve(data);
         })

@@ -2,12 +2,13 @@ import {Selector} from 'testcafe';
 process.env.NODE_ENV = "test";
 
 fixture`Testing Teacher UI`
-    .page`http://localhost:4401/`;
+    .page`http://localhost:4401/`
 
-fixture`Database Initialization`
-    .page`http://localhost:4401/dbinitialize`;
+/*fixture`Database Initialization`
+    .page`http://localhost:4401/dbinitialize`;*/
 
 test('Testing add teachers', async t => {
+    await t.navigateTo("/dbinitialize");
 
     await t.navigateTo("/addTeacher");
     await t.typeText("#teacher-id", "123456");

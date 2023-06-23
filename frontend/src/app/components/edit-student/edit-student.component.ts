@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppServiceService } from '../../app-service.service';
+import { Router, NavigationExtras } from '@angular/router';
+import {AppServiceService} from '../../app-service.service';
 
 @Component({
   selector: 'app-edit-student',
@@ -11,45 +11,33 @@ export class EditStudentComponent implements OnInit {
 
   studentData: any;
 
-  constructor(private service: AppServiceService, private router: Router) { }
+  constructor(private service : AppServiceService, private router: Router) { }
 
+  navigation = this.router.getCurrentNavigation();
+
+  
   ngOnInit(): void {
     this.getStudentData();
   }
 
-  getStudentData() {
-    const navigation = this.router.getCurrentNavigation();
-    const studentId = navigation?.extras?.state?.id;
-
-    if (studentId) {
-      this.service.getOneStudentData(studentId).subscribe(
-        (response) => {
-          this.studentData = response[0];
-        },
-        (error) => {
-          console.log('ERROR - ', error);
-        }
-      );
-    } else {
-      // Handle the case when studentId is not available
+  getStudentData(){
+    let student = {
+      id : this.navigation.extras.state.id
     }
+    this.service.getOneStudentData(student).subscribe((response)=>{
+      this.studentData = response[0];
+    },(error)=>{
+      console.log('ERROR - ', error)
+    })
   }
 
-  editStudent(values: any) {
-    const student = {
-      id: this.studentData.id,
-      name: values.name,
-      age: values.age,
-      hometown: values.hometown
-    };
-
-    this.service.editStudent(student).subscribe(
-      (response) => {
-        this.studentData = response[0];
-      },
-      (error) => {
-        console.log('ERROR - ', error);
-      }
-    );
+  editStudent(values){
+    values.id = this.navigation.extras.state.id;
+    this.service.editStudent(values).subscribe((response)=>{
+      this.studentData = response[0];
+    },(error)=>{
+      console.log('ERROR - ', error)
+    })
+    
   }
 }

@@ -1,17 +1,25 @@
-import express from 'express';
-//import cors from 'cors';
-import bodyParser from 'body-parser';
-import sqlite3 from 'sqlite3';
+const server  = require ("./server.js");
 
-const app = express();
-const port = 8080;
+if(process.env.NODE_ENV === "test"){
+  server.listen(3000, () => {
+    console.log(
+      "Capstone Project Backend is running on http://localhost:3000"
+    );
+  });
+}else{
+  server.listen(8080, () => {
+    console.log(
+      "Capstone Project Backend is running on http://localhost:8080"
+    );
+  });
+}
 
 // Create database connection
 const db = new sqlite3.Database(':memory:');
 
 // Create student table
 db.serialize(() => {
-  db.run('CREATE TABLE IF NOT EXISTS student (id INT, name TEXT, age INT, hometown TEXT, religion TEXT)');
+  db.run('CREATE TABLE IF NOT EXISTS student (id INT, name TEXT, age INT, hometown TEXT)');
 });
 
 //app.use(cors());
@@ -20,11 +28,11 @@ app.use(bodyParser.json());
 
 // Add a new student
 app.post('/addStudent', (req, res) => {
-  const { id, name, age, hometown, religion } = req.body;
+  const { id, name, age, hometown } = req.body;
 
   db.run(
-    'INSERT INTO student (id, name, age, hometown, religion) VALUES (?, ?, ?, ?, ?)',
-    [id, name, age, hometown, religion],
+    'INSERT INTO student (id, name, age, hometown) VALUES (?, ?, ?, ?)',
+    [id, name, age, hometown],
     function (err) {
       if (err) {
         console.error(err.message);
@@ -38,11 +46,11 @@ app.post('/addStudent', (req, res) => {
 
 // Edit a student
 app.post('/editStudent', (req, res) => {
-  const { id, name, age, hometown, religion } = req.body;
+  const { id, name, age, hometown} = req.body;
 
   db.run(
-    'UPDATE student SET name = ?, age = ?, hometown = ?, religion = ? WHERE id = ?',
-    [name, age, hometown, religion, id],
+    'UPDATE student SET name = ?, age = ?, hometown = ? WHERE id = ?',
+    [name, age, hometown, id],
     function (err) {
       if (err) {
         console.error(err.message);
@@ -68,7 +76,4 @@ app.post('/deleteStudent', (req, res) => {
   });
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Capstone Project Backend is running on http://localhost:${port}`);
-});
+

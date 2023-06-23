@@ -23,7 +23,7 @@ export class TeacherTableComponent implements OnInit {
   }
 
   addNewTeacher() {
-    this.router.navigate(['addTeacher']);
+    this.router.navigate(['addTeacher'])
   }
 
   editTeacher(id) {
@@ -32,62 +32,66 @@ export class TeacherTableComponent implements OnInit {
         id: id
       }
     };
-    this.router.navigate(['editTeacher'], navigationExtras);
+    this.router.navigate(['editTeacher'], navigationExtras)
   }
 
-  initializeDB() {
-    this.service.initializeDB().subscribe(
-      (response) => {
-        console.log('DB is Initialized');
-      },
-      (error) => {
-        console.log('ERROR - ', error);
-      }
-    );
+  initializeDB(){
+    this.service.initializeDB().subscribe((response) => {
+      console.log('DB is Initialized')
+    }, (error) => {
+      console.log('ERROR - ', error)
+    })
   }
 
   getTeacherData() {
     this.selected = 'Teachers';
-    this.service.getTeacherData().subscribe(
-      (response) => {
-        this.teacherData = Object.keys(response).map((key) => [response[key]]);
-        this.selected = this.teacherData;
-      },
-      (error) => {
-        console.log('ERROR - ', error);
-      }
-    );
+    this.service.getTeacherData().subscribe((response) => {
+      this.teacherData = Object.keys(response).map((key) => [response[key]]);
+      this.selected = this.teacherData;
+    }, (error) => {
+      console.log('ERROR - ', error)
+    })
   }
 
   getStudentData() {
     this.selected = 'Students';
-    this.service.getStudentData().subscribe(
-      (response) => {
-        this.teacherData = response;
-      },
-      (error) => {
-        console.log('ERROR - ', error);
-      }
-    );
+    this.service.getStudentData().subscribe((response) => {
+      this.teacherData = response;
+    }, (error) => {
+      console.log('ERROR - ', error)
+    })
   }
 
-  search() {
-    if (!this.searchText) {
-      this.selected = this.teacherData;
-    } else {
-      let foundItems = this.teacherData.filter((teacher) => {
-        return teacher[0].name.toLowerCase().includes(this.searchText.toLowerCase());
-      });
-      this.selected = foundItems;
-    }
-  }
-
-  deleteTeacher(itemid) {
-    const test = {
-      id: itemid
-    };
-    this.service.deleteTeacher(test).subscribe((response) => {
+   /*search(value) {
+    let foundItems = [];
+    if (value.length <= 0) {
       this.getTeacherData();
-    });
+       } else {
+      let b = this.teacherData.filter((teacher) => {
+        if (teacher[0].name.toLowerCase().indexOf(value) > -1) {
+          foundItems.push(teacher)
+        }
+         });
+      this.teacherData = foundItems;*/
+
+
+      search() {
+        if (!this.searchText) {
+          this.selected = this.teacherData;
+        } else {
+          let foundItems = this.teacherData.filter((teacher) => {
+            return teacher[0].name.toLowerCase().includes(this.searchText.toLowerCase());
+          });
+          this.selected = foundItems;
+
+        }
+      }
+      deleteTeacher(itemid) {
+        const test = {
+          id: itemid
+  }
+  this.service.deleteTeacher(test).subscribe((response) => {
+    this.getTeacherData()
+    })
   }
 }
