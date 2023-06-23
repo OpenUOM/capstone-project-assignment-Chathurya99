@@ -128,7 +128,7 @@ describe("Student Endpoints", () => {
     expect(body[2].name).toBe('Isuri De Silva');
   });
 
-  it("POST /addStudent should show a newly added student", async () => {
+  /*it("POST /addStudent should show a newly added student", async () => {
     // add new student
     await requestWithSupertest.post("/addStudent").send({
       "id": 99999,
@@ -149,7 +149,32 @@ describe("Student Endpoints", () => {
       "age": 12,
       "hometown": "Galle"
     });
+  });*/
+  it("POST /addStudent should show a newly added student", async () => {
+    // add new student
+    await requestWithSupertest.post("/addStudent").send({
+      "id": 99999,
+      "name": "Rashini Shehara",
+      "age": 12,
+      "hometown": "Galle"
+    });
+  
+    const res = await requestWithSupertest.get("/listStudents");
+    expect(res.status).toEqual(200);
+    let body = res.body;
+  
+    expect(body.length).toBe(4)
+  
+    const addedStudent = {
+      "id": 99999,
+      "name": "Rashini Shehara",
+      "age": 12,
+      "hometown": "Galle"
+    };
+  
+    expect(body).toContainEqual(addedStudent);
   });
+  
 
   it("POST /editStudent should edit a Student", async () => {
     // add new teacher
